@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>An annotated example of a JSON API document</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="an-annotated-example-of-a-json-api-document">An annotated example of a JSON API document</h1>
+<p>A JSON object <strong>MUST</strong> be at the root of every JSON API response containing
+data. This object defines a document’s “top level”.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>The document <strong>MAY</strong> be extended to include
+meta-information as <code>&quot;meta&quot;</code> members in several locations: at the top-level,
+within resource objects, within relationship objects, and within [resource
+identifier objects].</p>
+<p>All <code>&quot;meta&quot;</code> members <strong>MUST</strong> have an object as a value, the contents of which
+can be used for custom extensions.</p>
+<p>Any members <strong>MAY</strong> be specified within <code>meta</code> objects.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">"meta"</span>: {
+    <span class="hljs-string">"copyright"</span>: <span class="hljs-string">"Copyright 2015 Example Corp."</span>,
+    <span class="hljs-string">"authors"</span>: [
+      <span class="hljs-string">"Yehuda Katz"</span>,
+      <span class="hljs-string">"Steve Klabnik"</span>,
+      <span class="hljs-string">"Dan Gebhardt"</span>
+    ]
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>The document <strong>MAY</strong> be extended to include relevant URLs
+within <code>&quot;links&quot;</code> members at several locations: at the top-level, within resource
+objects, and within relationship objects.</p>
+<p>The allowed keys for <code>links</code> objects at the resource and relationship object
+levels are defined in the sections on [resource relationships] and
+[resource links].</p>
+<p>When a links object appears at the document’s top-level, it <strong>MAY</strong> have
+the following members:</p>
+<ul>
+<li><code>&quot;self&quot;</code> - the URL that generated the current response document.</li>
+<li><code>&quot;related&quot;</code> - a related resource URL (as defined above) when the primary
+data represents a resource relationship.</li>
+<li>Pagination links for the primary data (as described below).</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">"links"</span>: {
+    <span class="hljs-string">"self"</span>: <span class="hljs-string">"http://example.com/posts"</span>,
+    <span class="hljs-string">"next"</span>: <span class="hljs-string">"http://example.com/posts?page[offset]=2"</span>,
+    <span class="hljs-string">"last"</span>: <span class="hljs-string">"http://example.com/posts?page[offset]=10"</span>
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>The document’s “primary data” is a representation of the resource or collection
+of resources targeted by a request.</p>
+<p>Primary data <strong>MUST</strong> be either:</p>
+<ul>
+<li>a single resource object, a single [resource identifier object], or <code>null</code>,
+for requests that target single resources</li>
+<li>an array of resource objects, an array of [resource identifier objects], or
+an empty array ([]), for requests that target resource collections</li>
+</ul>
+<p>A logical collection of resources (e.g. the target of a to-many relationship)
+<strong>MUST</strong> be represented as an array, even if it only contains one item or is
+empty.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">"data"</span>: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>“Resource objects” appear in a JSON API document to represent resources.</p>
+<p>A resource object <strong>MUST</strong> contain at least the following top-level members:</p>
+<ul>
+<li><code>&quot;id&quot;</code></li>
+<li><code>&quot;type&quot;</code></li>
+</ul>
+<p>Every resource object is uniquely identified by the combination of its <code>&quot;type&quot;</code>
+and <code>&quot;id&quot;</code> members.</p>
+<p>A resource object’s <code>&quot;type&quot;</code> and <code>&quot;id&quot;</code> pair <strong>MUST</strong> refer to a single, unique
+resource.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Each resource object <strong>MUST</strong> contain a <code>&quot;type&quot;</code> member, whose value <strong>MUST</strong>
+be a string. The <code>&quot;type&quot;</code> is used to describe resource objects that share
+common attributes and relationships.</p>
+<blockquote>
+<p>Note: This spec is agnostic about inflection rules, so the value of <code>type</code>
+can be either plural or singular. However, the same value should be used
+consistently throughout an implementation.</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-string">"type"</span>: <span class="hljs-string">"posts"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Each resource object <strong>MUST</strong> contain an <code>&quot;id&quot;</code> member, whose value <strong>MUST</strong>
+be a string.</p>
+<p>Exception: The <code>id</code> member is not required when the resource object originates at
+the client and represents a new resource to be created on the server.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-string">"id"</span>: <span class="hljs-string">"1"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>The value of the <code>&quot;attributes&quot;</code> key is a JSON object (an “attributes object”)
+that represents information about the resource object it is contained within.</p>
+<p>The top level of this object shares a namespace with the members of <code>relationships</code>
+and <strong>MUST NOT</strong> contain <code>id</code> or <code>type</code> members. Apart from these restrictions,
+this object can contain members keyed by any string valid for this specification.</p>
+<h4 id="attributes-a-href-document-structure-resource-object-attributes-id-document-structure-resource-object-attributes-a-">Attributes <a href="#document-structure-resource-object-attributes" id="document-structure-resource-object-attributes"></a></h4>
+<p>All members which appear in an “attributes object” are considered attributes and
+may contain any valid JSON value.</p>
+<p>Although has-one foreign keys (e.g. <code>author_id</code>) are often stored internally
+alongside other information to be represented in a resource object, these keys
+<strong>SHOULD NOT</strong> appear as attributes. If relations are provided, they <strong>MUST</strong>
+be represented under the “links object”.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-string">"attributes"</span>: {
+        <span class="hljs-string">"title"</span>: <span class="hljs-string">"JSON API paints my bikeshed!"</span>
+      },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>The value of the <code>&quot;relationships&quot;</code> key is a JSON object (a “relationships object”)
+that represents references from the resource in whose resource object it’s defined
+to other resources (“relationships”). These relationships share a namespace with
+[attributes]; that is, relationships of a given resource object <strong>MUST</strong> be named
+differently than its [attributes].</p>
+<p>The keys <code>&quot;id&quot;</code> and <code>&quot;type&quot;</code> are not allowed within the relationships object.</p>
+<p>Relationships may be to-one or to-many. Relationships can be specified by
+including a member in a resource’s relationship’s object. The name of the
+relationship is its key in the relationship object.</p>
+<p>The value of a relationship <strong>MUST</strong> be an object (a “relationship object”),
+which <strong>MUST</strong> contain at least one of the following:</p>
+<ul>
+<li>A <code>&quot;links&quot;</code> member that contains at least one of the following:<ul>
+<li>A <code>&quot;self&quot;</code> member, whose value is a URL for the relationship itself (a
+“relationship URL”). This URL allows the client to directly manipulate the
+relationship. For example, it would allow a client to remove an <code>author</code>
+from an <code>article</code> without deleting the <code>people</code> resource itself.</li>
+<li>A <code>&quot;related&quot;</code> member, whose value is a related resource URL, as defined above.</li>
+</ul>
+</li>
+<li>A <code>&quot;data&quot;</code> member, whose value represents “resource linkage” (defined below).</li>
+<li>A <code>&quot;meta&quot;</code> member that contains non-standard meta-information about the
+relationship.</li>
+</ul>
+<p>A relationship object that represents a to-many relationship <strong>MAY</strong> also contain
+pagination links under the <code>&quot;links&quot;</code> member, as described below.</p>
+<p>Resource linkage <strong>MUST</strong> be represented as one of the following:</p>
+<ul>
+<li><code>null</code> for empty to-one relationships.</li>
+<li>a [resource identifier object] for non-empty to-one relationships.</li>
+<li>an empty array (<code>[]</code>) for empty to-many relationships.</li>
+<li>an array of [resource identifier objects] for non-empty to-many relationships.</li>
+</ul>
+<blockquote>
+<p>Note: Resource linkage in a compound document allows a client to link
+together all of the included resource objects without having to <code>GET</code> any
+relationship URLs.</p>
+</blockquote>
+<p>If present, a <em>related resource URL</em> <strong>MUST</strong> be a valid URL, even if the
+relationship isn’t currently associated with any target resources.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">"relationships"</span>: {
+      <span class="hljs-string">"author"</span>: {
+        <span class="hljs-string">"links"</span>: {
+          <span class="hljs-string">"self"</span>: <span class="hljs-string">"http://example.com/posts/1/relationships/author"</span>,
+          <span class="hljs-string">"related"</span>: <span class="hljs-string">"http://example.com/posts/1/author"</span>
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>A “resource identifier object” is an object that identifies an individual
+resource.</p>
+<p>It <strong>MUST</strong> contain <code>&quot;type&quot;</code> and <code>&quot;id&quot;</code> members.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-string">"data"</span>: { <span class="hljs-string">"type"</span>: <span class="hljs-string">"people"</span>, <span class="hljs-string">"id"</span>: <span class="hljs-string">"9"</span> }
+      },
+      <span class="hljs-string">"comments"</span>: {
+        <span class="hljs-string">"links"</span>: {
+          <span class="hljs-string">"self"</span>: <span class="hljs-string">"http://example.com/posts/1/relationships/comments"</span>,
+          <span class="hljs-string">"related"</span>: <span class="hljs-string">"http://example.com/posts/1/comments"</span>
+        },
+        <span class="hljs-string">"data"</span>: [
+          { <span class="hljs-string">"type"</span>: <span class="hljs-string">"comments"</span>, <span class="hljs-string">"id"</span>: <span class="hljs-string">"5"</span> },
+          { <span class="hljs-string">"type"</span>: <span class="hljs-string">"comments"</span>, <span class="hljs-string">"id"</span>: <span class="hljs-string">"12"</span> }
+        ]
+      }
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Analogous to the <code>&quot;links&quot;</code> member at the document’s top level, the optional
+<code>&quot;links&quot;</code> member within each resource object contains URLs related to the
+resource.</p>
+<p>If present, this object <strong>MAY</strong> contain a URL keyed by <code>&quot;self&quot;</code>, that identifies
+the resource represented by the resource object.</p>
+<p>A server <strong>MUST</strong> respond to a <code>GET</code> request to the specified URL with a
+response that includes the resource as the primary data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">"links"</span>: {
+      <span class="hljs-string">"self"</span>: <span class="hljs-string">"http://example.com/posts/1"</span>
+    }
+  }],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>To reduce the number of HTTP requests, servers <strong>MAY</strong> allow responses that
+include related resources along with the requested primary resources. Such
+responses are called “compound documents”.</p>
+<p>In a compound document, all included resources <strong>MUST</strong> be represented as an
+array of resource objects in a top-level <code>&quot;included&quot;</code> member.</p>
+<p>Compound documents require “full linkage”, meaning that every included
+resource <strong>MUST</strong> be identified by at least one [resource identifier object]
+in the same document. These resource identifier objects could either be
+primary data or represent resource linkage contained within primary or
+included resources.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">"included"</span>: [{
+    <span class="hljs-string">"type"</span>: <span class="hljs-string">"people"</span>,
+    <span class="hljs-string">"id"</span>: <span class="hljs-string">"9"</span>,
+    <span class="hljs-string">"attributes"</span>: {
+      <span class="hljs-string">"first-name"</span>: <span class="hljs-string">"Dan"</span>,
+      <span class="hljs-string">"last-name"</span>: <span class="hljs-string">"Gebhardt"</span>,
+      <span class="hljs-string">"twitter"</span>: <span class="hljs-string">"dgeb"</span>
+    },
+    <span class="hljs-string">"links"</span>: {
+      <span class="hljs-string">"self"</span>: <span class="hljs-string">"http://example.com/people/9"</span>
+    }
+  }, {
+    <span class="hljs-string">"type"</span>: <span class="hljs-string">"comments"</span>,
+    <span class="hljs-string">"id"</span>: <span class="hljs-string">"5"</span>,
+    <span class="hljs-string">"attributes"</span>: {
+      <span class="hljs-string">"body"</span>: <span class="hljs-string">"First!"</span>
+    },
+    <span class="hljs-string">"links"</span>: {
+      <span class="hljs-string">"self"</span>: <span class="hljs-string">"http://example.com/comments/5"</span>
+    }
+  }, {
+    <span class="hljs-string">"type"</span>: <span class="hljs-string">"comments"</span>,
+    <span class="hljs-string">"id"</span>: <span class="hljs-string">"12"</span>,
+    <span class="hljs-string">"attributes"</span>: {
+      <span class="hljs-string">"body"</span>: <span class="hljs-string">"I like XML better"</span>
+    },
+    <span class="hljs-string">"links"</span>: {
+      <span class="hljs-string">"self"</span>: <span class="hljs-string">"http://example.com/comments/12"</span>
+    }
+  }]
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
