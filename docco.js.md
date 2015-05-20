@@ -1,5 +1,3 @@
-# An annotated example of a JSON API document
-
 A JSON object **MUST** be at the root of every JSON API response containing
 data. This object defines a document's "top level".
 
@@ -28,20 +26,14 @@ The document **MAY** be extended to include relevant URLs
 within `"links"` members at several locations: at the top-level, within resource
 objects, and within relationship objects.
 
-The allowed keys for `links` objects at the resource and relationship object
-levels are defined in the sections on [resource relationships] and
-[resource links].
-
-When a links object appears at the document's top-level, it **MAY** have
-the following members:
-
-* `"self"` - the URL that generated the current response document.
-* `"related"` - a related resource URL (as defined above) when the primary
-  data represents a resource relationship.
-* Pagination links for the primary data (as described below).
-
       "links": {
+
+The URL that generated the current response document.
+
         "self": "http://example.com/posts",
+
+Pagination links for the primary data.
+
         "next": "http://example.com/posts?page[offset]=2",
         "last": "http://example.com/posts?page[offset]=10"
       },
@@ -64,26 +56,14 @@ empty.
 
 "Resource objects" appear in a JSON API document to represent resources.
 
-A resource object **MUST** contain at least the following top-level members:
-
-* `"id"`
-* `"type"`
-
 Every resource object is uniquely identified by the combination of its `"type"`
 and `"id"` members.
-
-A resource object's `"type"` and `"id"` pair **MUST** refer to a single, unique
-resource.
 
         {
 
 Each resource object **MUST** contain a `"type"` member, whose value **MUST**
 be a string. The `"type"` is used to describe resource objects that share
 common attributes and relationships.
-
-> Note: This spec is agnostic about inflection rules, so the value of `type`
-can be either plural or singular. However, the same value should be used
-consistently throughout an implementation.
 
           "type": "posts",
 
@@ -101,8 +81,6 @@ that represents information about the resource object it is contained within.
 The top level of this object shares a namespace with the members of `relationships`
 and **MUST NOT** contain `id` or `type` members. Apart from these restrictions,
 this object can contain members keyed by any string valid for this specification.
-
-#### Attributes <a href="#document-structure-resource-object-attributes" id="document-structure-resource-object-attributes"></a>
 
 All members which appear in an "attributes object" are considered attributes and
 may contain any valid JSON value.
@@ -122,27 +100,29 @@ to other resources ("relationships"). These relationships share a namespace with
 [attributes]; that is, relationships of a given resource object **MUST** be named
 differently than its [attributes].
 
-The keys `"id"` and `"type"` are not allowed within the relationships object.
-
 Relationships may be to-one or to-many. Relationships can be specified by
 including a member in a resource's relationship's object. The name of the
 relationship is its key in the relationship object.
 
-The value of a relationship **MUST** be an object (a "relationship object"),
-which **MUST** contain at least one of the following:
+The value of a relationship **MUST** be an object.
 
-* A `"links"` member that contains at least one of the following:
-  * A `"self"` member, whose value is a URL for the relationship itself (a
-    "relationship URL"). This URL allows the client to directly manipulate the
-    relationship. For example, it would allow a client to remove an `author`
-    from an `article` without deleting the `people` resource itself.
-  * A `"related"` member, whose value is a related resource URL, as defined above.
-* A `"data"` member, whose value represents "resource linkage" (defined below).
-* A `"meta"` member that contains non-standard meta-information about the
-  relationship.
+        "relationships": {
+          "author": {
+            "links": {
 
-A relationship object that represents a to-many relationship **MAY** also contain
-pagination links under the `"links"` member, as described below.
+A URL for the relationship itself (a
+"relationship URL"). This URL allows the client to directly manipulate the
+relationship. For example, it would allow a client to remove an `author`
+from an `article` without deleting the `people` resource itself.
+
+              "self": "http://example.com/posts/1/relationships/author",
+
+A related resource URL, as defined above.
+
+              "related": "http://example.com/posts/1/author"
+            },
+
+A `"data"` member represents "resource linkage".
 
 Resource linkage **MUST** be represented as one of the following:
 
@@ -151,19 +131,8 @@ Resource linkage **MUST** be represented as one of the following:
 * an empty array (`[]`) for empty to-many relationships.
 * an array of [resource identifier objects] for non-empty to-many relationships.
 
-> Note: Resource linkage in a compound document allows a client to link
-together all of the included resource objects without having to `GET` any
-relationship URLs.
-
 If present, a *related resource URL* **MUST** be a valid URL, even if the
 relationship isn't currently associated with any target resources.
-
-        "relationships": {
-          "author": {
-            "links": {
-              "self": "http://example.com/posts/1/relationships/author",
-              "related": "http://example.com/posts/1/author"
-            },
 
 A "resource identifier object" is an object that identifies an individual
 resource.

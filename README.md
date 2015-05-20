@@ -4,14 +4,14 @@ Visualizations for understanding the structure of a JSON API document.
 
 ## Docco source
 
-A first-draft attempt using the stock output of [Docco] against an extended
-version of the JSON API example, as seen on [the JSON API home page][home],
-written in Literate Javascript.
+A first-draft attempt using [Docco] against an extended version of the JSON API
+example, as seen on [the JSON API home page][home], written in Literate
+Javascript.
 
-To modify this example, edit index.js.md, then run this:
+To modify this example, edit docco.js.md, then run this:
 
-    docco --output . index.js.md
-    mv index.js.html index.html
+    docco --template docco-custom.jst --output . docco.js.md
+    mv docco.js.html index.html
 
 Docco will then re-generate the output.
 

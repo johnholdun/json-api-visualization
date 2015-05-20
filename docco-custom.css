@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #F9F9F9;
+  background: #333;
+  font: 14px/1.5em sans-serif;
+  margin: 2em;
+}
+
+h1 {
+  line-height: 1em;
+  margin-bottom: 1em;
+}
+
+code {
+  font-family: monospace;
+}
+
+.section {
+  position: relative;
+}
+
+.annotation {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  margin-left: 2em;
+  padding: 1em;
+  background: #555;
+}
+
+.annotation p,
+.annotation ul {
+  margin-bottom: 1em;
+}
+
+.annotation li {
+  margin-left: 1em;
+}
+
+.annotation > *:last-child {
+  margin-bottom: 0;
+}
+
+.code {
+  display: block;
+  width: 50%;
+}
+
+.code pre {
+  white-space: pre-wrap;
+}
+
+.annotation {
+  display: none;
+}
+
+.section:hover {
+  background: #111;
+}
+
+.section:hover .annotation {
+  display: block;
+}
