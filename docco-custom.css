@@ -7,7 +7,9 @@ body {
   color: #F9F9F9;
   background: #333;
   font: 14px/1.5em sans-serif;
-  margin: 2em;
+  margin: 2em auto;
+  padding: 0 2em;
+  max-width: 75em;
 }
 
 h1 {
@@ -25,11 +27,29 @@ code {
 
 .annotation {
   position: absolute;
-  left: 50%;
-  right: 0;
+  left: 50em;
   margin-left: 2em;
+  right: 0;
+  height: 2em;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+  color: #999;
+}
+
+.annotation:not(:hover) * {
+  display: inline;
+}
+
+.annotation:hover {
   padding: 1em;
+  margin: -1em -1em 0 1em;
+  z-index: 3;
+  overflow: visible;
+  white-space: normal;
   background: #555;
+  height: auto;
 }
 
 .annotation p,
@@ -47,21 +67,9 @@ code {
 
 .code {
   display: block;
-  width: 50%;
+  width: 50em;
 }
 
 .code pre {
   white-space: pre-wrap;
-}
-
-.annotation {
-  display: none;
-}
-
-.section:hover {
-  background: #111;
-}
-
-.section:hover .annotation {
-  display: block;
 }
